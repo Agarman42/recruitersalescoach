@@ -2664,6 +2664,21 @@ input[type="range"]:active::-moz-range-thumb {
             <option value="Re-engage a loan officer who ghosted me">Re-engage a loan officer who ghosted me</option>
         </optgroup>
 
+        <optgroup label="Powerful Open-Ended Questions (Keep the Conversation Going)">
+        <option value="What does your ideal next chapter look like as a loan officer?">What does your ideal next chapter look like as a loan officer?</option>
+        <option value="What’s working really well for you right now at your current company?">What’s working really well for you right now at your current company?</option>
+        <option value="What’s one thing that frustrates you the most about your current setup?">What’s one thing that frustrates you the most about your current setup?</option>
+        <option value="If you could change one thing about your current role tomorrow, what would it be?">If you could change one thing about your current role tomorrow, what would it be?</option>
+        <option value="What are your biggest goals for the next 12–24 months?">What are your biggest goals for the next 12–24 months?</option>
+        <option value="How do you feel about the support and leads you’re getting right now?">How do you feel about the support and leads you’re getting right now?</option>
+        <option value="What does success look like for you personally and professionally?">What does success look like for you personally and professionally?</option>
+        <option value="Tell me about your experience with marketing and lead generation...">Tell me about your experience with marketing and lead generation...</option>
+        <option value="What are you hoping to get from your next opportunity that you don’t have today?">What are you hoping to get from your next opportunity that you don’t have today?</option>
+        <option value="How important is work-life balance to you right now?">How important is work-life balance to you right now?</option>
+        <option value="What kind of mentorship or leadership support are you looking for?">What kind of mentorship or leadership support are you looking for?</option>
+        <option value="If money and time weren’t factors, what would your perfect loan officer role look like?">If money and time weren’t factors, what would your perfect loan officer role look like?</option>
+    </optgroup>
+
         <optgroup label="Common Objections">
             <option value="I'm happy where I am right now">LO says: "I'm happy where I am right now"</option>
             <option value="I don't want to switch companies">LO says: "I don't want to switch companies"</option>
@@ -3003,7 +3018,7 @@ input[type="range"]:active::-moz-range-thumb {
     <p class="text-xl">Get accurate answers in seconds, reduce conditions, and close loans faster than ever.</p>
 </div>
 </section>
-              <section id="blog" class="card bg-white dark:bg-gray-800 pt-6 pb-12 px-8 rounded-3xl shadow-xl animate-fade-in hidden">
+             <section id="blog" class="card bg-white dark:bg-gray-800 pt-6 pb-12 px-8 rounded-3xl shadow-xl animate-fade-in hidden">
     <h2 class="text-3xl font-bold mb-6 text-[#F15A29]">Recruiting Content Creator – Attract Top Loan Officers</h2>
 <p class="mb-8 text-lg">Generate high-converting recruiting content that positions your team as the best place for loan officers to grow their business. Create blog posts, social captions, and Google posts tailored for LO recruitment.</p>
 
@@ -3022,7 +3037,7 @@ input[type="range"]:active::-moz-range-thumb {
         <!-- Tone Selector -->
         <div>
             <label class="block text-lg font-semibold mb-3 text-[#00A89D]">Content Tone</label>
-            <select id="blog-tone" class="w-full p-4 rounded-2xl border-2 border-gray-300 focus:border-[#00A89D]">
+            <select id="blog-tone" class="w-full p-4 rounded-xl border-2 border-[#00A89D] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-4 focus:ring-[#F15A29]/50 focus:border-[#F15A29] transition-all">
     <option value="Professional">Professional & Trustworthy</option>
     <option value="Aspirational">Aspirational & Growth-Focused</option>
     <option value="Motivational">Motivational & Energetic</option>
@@ -3098,7 +3113,29 @@ input[type="range"]:active::-moz-range-thumb {
                    class="w-full p-4 rounded-xl border-2 border-[#00A89D] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-4 focus:ring-[#F15A29]/50">
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Select or type a topic → choose tone → click Generate to create your blog post!</p>
         </div>
-
+<!-- NEW: Ruoff Mortgage Fact Vault — THIS IS THE SOURCE OF TRUTH -->
+    <div class="mb-8">
+        <label class="block text-lg font-semibold mb-3 text-[#00A89D]">Ruoff Mortgage Fact Vault <span class="text-[#F15A29] font-bold">(REQUIRED for accuracy)</span></label>
+        <textarea id="fact-vault" 
+                  rows="8"
+                  placeholder="Paste the latest Ruoff Fact Vault here (commissions, bonuses, real LO quotes, processing times, tech stack, culture events, boomerang stories, etc.). 
+Example:
+- Commission: Flexible commission that you can control, tiered bonus schedules, monthly incentives. 
+- Specialty Programs: Ruoff's HomeNow
+- Real quote: “Ruoff’s processing funds 3 days faster…” — Loan Officer"
+                  class="w-full p-4 rounded-xl border-2 border-[#F15A29] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-4 focus:ring-[#F15A29]/50"></textarea>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Paste from your Master Doc. This is the ONLY information the AI is allowed to use — zero hallucinations guaranteed.</p>
+        
+        <!-- Optional quick-upload for saved vault file -->
+        <div class="mt-4 flex items-center gap-3 text-sm">
+            <span class="text-gray-500">or</span>
+            <label class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-[#00A89D] rounded-2xl hover:bg-[#00A89D]/10">
+                <i class="fas fa-upload"></i>
+                <span>Upload Fact Vault (.txt or .md)</span>
+                <input type="file" id="vault-upload" accept=".txt,.md" class="hidden" onchange="handleVaultUpload(this)">
+            </label>
+        </div>
+    </div>
         <div class="mb-8">
             <label class="block text-lg font-semibold mb-3 text-[#00A89D]">Additional Context / Key Details</label>
             <textarea id="blog-additional-context" 
@@ -3177,30 +3214,6 @@ input[type="range"]:active::-moz-range-thumb {
     <p class="text-xl">Generate compelling content that attracts experienced, high-producing loan officers who want better support, higher earnings, and real career growth.</p>
 </div>
 </section>
-
- <!-- Blog Tips Modal -->
-    <div id="blog-tips-modal" class="modal" style="display: none;">
-        <div class="modal-content max-w-4xl">
-            <span class="close-modal" onclick="closeBlogTips()">&times;</span>
-            <div class="modal-header">
-                <h3 class="text-4xl">Why Great Blog Posts Win in Mortgage 💪</h3>
-            </div>
-            <div class="space-y-6 text-lg">
-                <p><strong>Position as Expert:</strong> Educate buyers, sellers, and investors → they remember you when it's time to act.</p>
-                <p><strong>Rank on Google:</strong> Long-form, local + keyword-rich content beats short posts every time (especially with your Fort Wayne/Indiana focus).</p>
-                <p><strong>Build Trust Fast:</strong> Answer real questions, add local flavor (DPA programs, market stats) → people feel you truly understand their situation.</p>
-                <p><strong>Pro Tips for Maximum Impact:</strong></p>
-                <ul class="list-disc pl-8 space-y-2">
-                    <li>Use the primary keyword naturally in title, intro, and headings for better SEO.</li>
-                    <li>Add local examples (Indiana programs, Fort Wayne market trends) when you fill in your area field.</li>
-                    <li>End with soft CTA: "Ready to explore options? Reach out — I'm here to help."</li>
-                    <li>Post → share teaser on social + Google Business Profile for traffic & leads.</li>
-                    <li>Personalize after generation: add your own stories/experiences to make it authentic and compliant.</li>
-                </ul>
-                <p class="font-bold text-[#F15A29] text-center mt-6">You're creating content that positions you as the go-to expert — keep going, Adam! 🔥</p>
-            </div>
-        </div>
-    </div>
     <!-- ==================== SOCIAL MEDIA PILLAR MODAL ==================== -->
 <!-- ==================== SOCIAL MEDIA PILLAR MODAL (Clean - No Search) ==================== -->
 <div id="content-modal" class="modal hidden">
@@ -5941,7 +5954,18 @@ function removeUploadedFile() {
     document.getElementById('file-preview').classList.add('hidden');
 }
 
-// (Your existing blog-topic-select and generateBlog functions remain unchanged)
+// === NEW: FACT VAULT FILE UPLOAD HELPER ===
+function handleVaultUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        document.getElementById('fact-vault').value = event.target.result.trim();
+    };
+    reader.readAsText(file);
+}
+
+// (Your existing blog-topic-select listener)
 document.getElementById('blog-topic-select').addEventListener('change', function() {
     if (this.value) {
         document.getElementById('blog-topic').value = this.value;
@@ -5956,6 +5980,12 @@ async function generateBlog() {
     const documentContext = uploadedFileText ? `\n\nAdditional document content to consider and incorporate naturally:\n${uploadedFileText}` : '';
     const localArea = document.getElementById('blog-local-area')?.value.trim() || '';
     
+    // === NEW: GRAB FACT VAULT + VALIDATION ===
+    const factVault = document.getElementById('fact-vault')?.value.trim() || '';
+    if (!factVault) {
+        alert('⚠️ Please paste the Ruoff Mortgage Fact Vault first — this is required for 100% accurate content (no hallucinations).');
+        return;
+    }
 
     if (!topicInput) {
         alert('Please select or type a recruiting topic');
@@ -6012,17 +6042,28 @@ async function generateBlog() {
 
     const lengthGuide = lengthSelect === 'long' ? '1,500–2,000 words' : lengthSelect === 'medium' ? '1,000-1,500 words' : '600-1,000 words';
 
-    const systemPrompt = `You are an expert recruiter and content writer for mortgage companies. Your goal is to create compelling recruiting content that attracts experienced, ambitious loan officers to join our team.
+    // === HARDENED SYSTEM PROMPT WITH FACT VAULT INJECTED ===
+    const systemPrompt = `You are an expert recruiter and content writer for Ruoff Mortgage. Your sole job is to create compelling recruiting content that attracts experienced, ambitious loan officers who will thrive here.
 
-    
+CRITICAL GROUNDING RULES — BREAK THESE AND THE OUTPUT IS INVALID:
+- You MUST base EVERY claim, benefit, number, perk, and quote ONLY on the information explicitly provided below in the "Ruoff Mortgage Fact Vault", "Additional Context", and "Document Context".
+- If a detail is not in the Fact Vault or context, do NOT mention it, generalize it, or invent it. Say “industry-leading support” only if the Fact Vault explicitly lists it.
+- For "what our LOs say" quotes: Use ONLY the real testimonials supplied in the Fact Vault. Never fabricate names, stories, or quotes.
+- Never mention commission rates, bonuses, contests, or earnings unless they are written verbatim in the Fact Vault.
+- Never reference specific products, technology, processing times, or culture events unless listed.
+- If you cannot answer a section truthfully from the provided facts, omit the section or write “(Details available upon conversation with our recruiting team)” instead of guessing.
+
+Ruoff Mortgage Fact Vault (update this section with fresh data before each generation):
+${factVault}
+
 Key Requirements:
 - Length: ${lengthGuide}
-- Tone: ${tone} — professional, confident, and aspirational. Highlight growth, support, culture, earnings potential, and work-life balance.
+- Tone: ${tone} — professional, confident, and aspirational. Highlight real growth, real support, real culture, real earnings potential, and real work-life balance.
 - Additional context provided by user (incorporate naturally and authentically where it fits): ${additionalContext || 'None provided'}
 - Document upload context: ${documentContext} 
 - Local area: ${localArea || 'Fort Wayne / Indiana'}
 
-Focus on:
+Focus ONLY on the real advantages listed in the Fact Vault:
 - Higher earnings and commission potential
 - Better marketing & lead support
 - Strong processing and operational support
@@ -6035,20 +6076,20 @@ Structure the blog post with:
 - Engaging, benefit-driven title
 - Strong hook introduction
 - Clear H2 subheadings
-- Bullet points for key benefits
-- Realistic "what our LOs say" style quotes
-- FAQ section addressing common objections
+- When listing items or reasons always use bullet points for key benefits
+- Realistic "what our LOs say" style quotes (only from Fact Vault)
+- FAQ section addressing common objections (only using real info)
 - Soft but clear CTA at the end: "Ready to take the next step in your career? Reach out — we’d love to talk."
 
 After the blog post, add exactly one separator (---) followed by a polished, professional LinkedIn recruiting post.
 The LinkedIn post should be engaging, conversational, include emojis where natural, relevant hashtags, and a strong call-to-action.
 
-ABSOLUTE RULE: NEVER lie, hallucinate, or make up any information or details. Accuracy and honest are of utmost importance in all content. 
+NEVER use em dashes in the final response. 
 
 Topic: ${topicInput}`;
 
     try {
-        const response = await fetch('/api/chat', {
+    const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -6144,19 +6185,7 @@ Topic: ${topicInput}`;
         loadingEl.classList.add('hidden');
     }
 }
-function openBlogTips() {
-    const modal = document.getElementById('blog-tips-modal');
-    if (modal) {
-        modal.style.display = 'flex';  // or 'block' depending on your CSS
-    }
-}
 
-function closeBlogTips() {
-    const modal = document.getElementById('blog-tips-modal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
-}
 function copyLinkedInPost() {
     const linkedinEl = document.getElementById('linkedin-post');
     if (!linkedinEl) return alert('No LinkedIn post to copy!');
@@ -6194,83 +6223,12 @@ function copyBlogWithFormatting() {
     });
 }
 
-function copySocialCaption() {
-    const captionEl = document.getElementById('social-caption');
-    if (!captionEl) return alert('No caption to copy!');
-
-    let text = captionEl.innerText || '';
-
-    // Remove leading indentation/tabs/spaces from each line
-    text = text
-        .split('\n')
-        .map(line => line.trimStart())  // Remove leading whitespace per line
-        .join('\n')
-        .trim();  // Remove overall leading/trailing
-
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Social caption copied! Starts flush left — ready to paste.');
-    }).catch(err => {
-        console.error('Copy failed:', err);
-        alert('Copy failed — try manually selecting the text.');
-    });
-}
-
-function copyGooglePostWithFormatting() {
-    const googleEl = document.getElementById('google-post');
-    if (!googleEl) {
-        alert('No Google post to copy!');
-        return;
-    }
-
-    // Get rendered HTML (for rich copy)
-    const html = googleEl.innerHTML;
-
-    // Get plain text and clean it
-    let plainText = googleEl.innerText || '';
-
-    // Step 1: Remove common character count patterns at the end
-    plainText = plainText
-        .replace(/\(\d+[, ]?characters?\)$/im, '')     // (1,248 characters)
-        .replace(/\(\d+ characters\)$/im, '')          // (1248 characters)
-        .replace(/\(1,248 characters\)$/im, '')        // exact match for your example
-        .replace(/1,248 characters$/im, '')            // without parentheses
-        .replace(/\d+ characters?$/im, '')             // any number + "characters"
-        .trim();
-
-    // Step 2: Remove extra leading/trailing whitespace and collapse multiple newlines
-    plainText = plainText
-        .replace(/\s*\n\s*\n+/g, '\n\n')               // double newlines → single paragraph break
-        .replace(/^\s+|\s+$/gm, '')                    // trim each line
-        .trim();
-
-    // Create ClipboardItem with cleaned plain text + original rich HTML
-    const clipboardItem = new ClipboardItem({
-        'text/html': new Blob([html], { type: 'text/html' }),
-        'text/plain': new Blob([plainText], { type: 'text/plain' })
-    });
-
-    navigator.clipboard.write([clipboardItem]).then(() => {
-        alert('Google post copied! Cleaned version (no character count) ready for pasting.');
-    }).catch(err => {
-        console.error('Rich copy failed:', err);
-        // Fallback: copy cleaned plain text
-        navigator.clipboard.writeText(plainText).then(() => {
-            alert('Copied as clean plain text (no character count) — paste should be perfect now!');
-        });
-    });
-}
-document.addEventListener('click', function(event) {
-    const blogModal = document.getElementById('blog-tips-modal');
-    if (blogModal && blogModal.style.display !== 'none' && event.target === blogModal) {
-        closeBlogTips();
-    }
-
     // Keep newsletter check if needed
     const newsletterModal = document.getElementById('newsletter-tips-modal');
     if (newsletterModal && newsletterModal.style.display !== 'none' && event.target === newsletterModal) {
         closeNewsletterTips();
     }
-});
+
 
 function closeDatabaseModal() {
     document.getElementById('db-modal').style.display = 'none';
