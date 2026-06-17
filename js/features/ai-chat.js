@@ -31,6 +31,19 @@ When asked what the tool does or about its features, ALWAYS highlight the AI TOO
 • AI Chat Assistant – Your always-on recruiting coach
 Be enthusiastic, encouraging, and focus on outreach discipline (270/wk), quality conversations (24-25/wk), and executive calls — not rate pitches or borrower content. Use bullet points.`;
 
+  function getWeekendCoachSlice() {
+    if (typeof window.getWeekendPlanRules === 'function') {
+      let slice = `\n\nSCHEDULING & PLANNING RULES (weekly plans, social calendars, outreach timing — always follow):\n${window.getWeekendPlanRules()}`;
+      if (typeof window.getWeekendSocialRules === 'function') slice += `\n\n${window.getWeekendSocialRules()}`;
+      return slice;
+    }
+    return '\n\nSCHEDULING RULE: Saturdays and Sundays are for rest, family, and recharge — never assign networking events, prospecting blitzes, or heavy outreach on weekends. Optional light prep only (15–30 min max).';
+  }
+
+  function getBaseSystemWithCoachRules() {
+    return BASE_SYSTEM_PROMPT + getWeekendCoachSlice();
+  }
+
   // =====================================================
   // ORIGINAL AI CHAT CODE (moved and combined)
   // =====================================================
@@ -38,7 +51,7 @@ Be enthusiastic, encouraging, and focus on outreach discipline (270/wk), quality
 let chatHistory = [
     {
         role: "system",
-        content: BASE_SYSTEM_PROMPT
+        content: getBaseSystemWithCoachRules()
     }
 ];
 async function sendChatMessage() {
@@ -229,7 +242,7 @@ function injectProfileContext() {
   const facts = getFactVaultContext();
   const systemMsg = chatHistory[0];
   if (systemMsg && systemMsg.role === 'system') {
-    let content = BASE_SYSTEM_PROMPT + `\n\nCURRENT USER PROFILE CONTEXT — use this to make every answer specific and personal: ${ctx}`;
+    let content = getBaseSystemWithCoachRules() + `\n\nCURRENT USER PROFILE CONTEXT — use this to make every answer specific and personal: ${ctx}`;
     if (facts) {
       content += `\n\nRUOFF FACT VAULT (ground recruiting advice in these facts — never invent comp, ops, or tech claims):\n${facts}`;
     }
@@ -250,7 +263,7 @@ function loadChatHistory() {
     const saved = JSON.parse(localStorage.getItem('aiChatHistory') || '[]');
     if (saved.length) {
       // Rebuild: system first, then saved
-      const system = chatHistory[0] || { role: 'system', content: BASE_SYSTEM_PROMPT };
+      const system = chatHistory[0] || { role: 'system', content: getBaseSystemWithCoachRules() };
       chatHistory = [system, ...saved];
     }
   } catch (e) {}
@@ -330,7 +343,7 @@ function useInTool(btn, tool) {
   if (tool === 'social' && window.showSection) {
     window.showSection('social-post');
     setTimeout(() => {
-      const ta = document.getElementById('custom-plan-prompt') || document.querySelector('#social-post textarea');
+      const ta = document.getElementById('post-details') || document.querySelector('#social-post textarea');
       if (ta) {
         ta.value = (ta.value ? ta.value + '\n\n' : '') + 'Idea from AI Coach: ' + text;
         ta.focus();
@@ -353,7 +366,7 @@ function clearChat() {
   if (!confirm('Clear this conversation?')) return;
   const messagesDiv = document.getElementById('chat-messages');
   if (messagesDiv) messagesDiv.innerHTML = '';
-  chatHistory = [{ role: 'system', content: BASE_SYSTEM_PROMPT }];
+  chatHistory = [{ role: 'system', content: getBaseSystemWithCoachRules() }];
   localStorage.removeItem('aiChatHistory');
   // Show fresh welcome
   setTimeout(() => {
@@ -406,7 +419,7 @@ function setupChatSuggestions() {
 
     // Ensure system prompt is the rich base
     if (!chatHistory.length || chatHistory[0].role !== 'system') {
-      chatHistory.unshift({ role: 'system', content: BASE_SYSTEM_PROMPT });
+      chatHistory.unshift({ role: 'system', content: getBaseSystemWithCoachRules() });
     }
 
     // Render any previous messages
