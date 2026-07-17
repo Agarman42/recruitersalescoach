@@ -52,7 +52,7 @@
     <meta name="theme-color" content="#002B5C">
 
     <!-- Extracted external stylesheet (Phase 0 refactor) -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css?v=20260717-editorial-output">
 
     <!-- Centralized API client (Phase 0) - must load early -->
     <script src="js/api.js?v=20260717-recruit-home"></script>
@@ -396,7 +396,11 @@
       <div class="text-center mb-6">
         <span class="inline-block text-[10px] font-bold tracking-[2px] text-[#F15A29] bg-[#F15A29]/10 px-3 py-1 rounded-full mb-3">STT + COACHING</span>
         <h2 class="text-3xl font-bold mb-2 text-[#00A89D]">Call Review</h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Upload a real recruiting call recording. We transcribe with Grok STT, then score the conversation and coach the next call. Transcripts &amp; reviews stay in this browser only.</p>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Upload a real recruiting call (or paste a transcript). We transcribe with Grok STT, then coach like a senior mentor — with major emphasis on <strong>objection handling</strong> and <strong>moving toward a Clint / leadership call</strong>. Transcripts &amp; reviews stay in this browser only.</p>
+      </div>
+
+      <div class="rounded-2xl border border-[#00A89D]/30 bg-[#00A89D]/5 px-4 py-3 mb-4 text-sm text-[#002B5C] dark:text-teal-100">
+        <strong class="text-[#00A89D]">Coaching focus:</strong> Highest priority = overcoming objections. Very high priority = confidently advancing a short call with Clint / leadership. Clear next step (who / when) is next. Opener, discovery, listening, and Ruoff differentiators still score — but do not outrank those two skills.
       </div>
 
       <div class="rounded-2xl border border-amber-300/60 bg-amber-50 dark:bg-amber-900/20 px-4 py-3 mb-6 text-sm text-amber-900 dark:text-amber-100">
@@ -434,34 +438,36 @@
           </div>
 
           <div class="flex flex-wrap gap-3">
-            <button type="button" id="call-review-transcribe" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#002B5C] text-white font-bold hover:bg-black transition">
+            <button type="button" id="call-review-transcribe" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#002B5C] text-white font-bold hover:bg-black transition disabled:opacity-60 disabled:cursor-not-allowed">
               <i class="fas fa-closed-captioning"></i> Transcribe
             </button>
-            <button type="button" id="call-review-analyze" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#00A89D] to-[#F15A29] text-white font-bold shadow-md hover:opacity-95 transition">
+            <button type="button" id="call-review-analyze" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#00A89D] to-[#F15A29] text-white font-bold shadow-md hover:opacity-95 transition disabled:opacity-60 disabled:cursor-not-allowed">
               <i class="fas fa-chart-line"></i> Analyze &amp; Coach
             </button>
             <button type="button" id="call-review-clear" class="inline-flex items-center gap-2 px-4 py-3 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
               Clear
             </button>
           </div>
-          <p id="call-review-status" class="text-sm text-gray-500 m-0"></p>
+          <div id="call-review-status" class="hidden rounded-2xl border px-4 py-3.5 text-sm sm:text-base font-semibold m-0 flex items-start gap-3" role="status" aria-live="polite"></div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 m-0">After you click Transcribe or Analyze, a full-screen progress modal stays open until the step finishes — don’t close the tab mid-run.</p>
 
           <div>
             <label class="block text-sm font-semibold mb-2 text-[#002B5C] dark:text-white" for="call-review-transcript">Transcript</label>
             <textarea id="call-review-transcript" rows="12" class="w-full p-4 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-sm leading-relaxed" placeholder="Transcript appears here after Transcribe. You can edit before Analyze, or paste a transcript directly."></textarea>
           </div>
 
-          <div id="call-review-output" class="hidden prose dark:prose-invert max-w-none rounded-3xl border border-[#00A89D]/30 bg-[#00A89D]/5 p-6 text-sm"></div>
+          <div id="call-review-output" class="hidden ai-output max-w-none"></div>
         </div>
 
         <div class="space-y-4">
           <div class="rounded-3xl border border-gray-200 dark:border-gray-700 p-5">
             <h3 class="text-sm font-bold text-[#002B5C] dark:text-white mb-2">What you get</h3>
             <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 m-0 pl-4 list-disc">
-              <li>Overall score + strengths</li>
-              <li>Gaps with scorecard (1–5)</li>
-              <li>Rewrites of weak moments</li>
-              <li>3 practice focuses for next call</li>
+              <li>Overall score (weighted to objections + Clint ask)</li>
+              <li>Key coaching opportunities on soft exits &amp; missed asks</li>
+              <li>Scorecard (1–5) with heavier commentary on objections &amp; Clint</li>
+              <li>Rewrites for objection moments and Clint asks</li>
+              <li>3 practice drills focused on those two skills</li>
             </ul>
           </div>
           <div class="rounded-3xl border border-gray-200 dark:border-gray-700 p-5">
@@ -2505,7 +2511,7 @@
 <script src="js/features/weekly-win-plan.js"></script>
 <script src="js/features/tool-bridges.js"></script>
 <script src="js/features/prospecting-time-blocks.js"></script>
-<script src="js/features/blog-creator.js"></script>
+<script src="js/features/blog-creator.js?v=20260717-editorial-output"></script>
 <script src="js/features/legacy-helpers.js"></script>
 <script src="js/features/ai-chat.js"></script>
 <script src="js/features/global-search-deep-index.js?v=20260717-recruit-search"></script>
@@ -2515,7 +2521,7 @@
 <script src="js/features/recruit-profile-wizard.js?v=20260717-recruit-wizard4"></script>
 <script src="js/features/home-launchpad.js?v=20260717-recruit-home"></script>
 <script src="js/features/voice-roleplay.js?v=20260717-recruit-voice"></script>
-<script src="js/features/call-review.js?v=20260717-recruit-voice"></script>
+<script src="js/features/call-review.js?v=20260717-progress-detail"></script>
 <script src="js/features/recruiting-content-overrides.js"></script>
 
 <script>
