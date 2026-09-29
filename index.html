@@ -52,7 +52,7 @@
     <meta name="theme-color" content="#002B5C">
 
     <!-- Extracted external stylesheet (Phase 0 refactor) -->
-    <link rel="stylesheet" href="css/main.css?v=20260717-editorial-output">
+    <link rel="stylesheet" href="css/main.css">
 
     <!-- Centralized API client (Phase 0) - must load early -->
     <script src="js/api.js?v=20260717-recruit-home"></script>
@@ -155,6 +155,7 @@
             <ul class="space-y-0.5 px-2 text-sm">
                 <li><a href="#voice-roleplay" class="sidebar-link px-4 py-2.5"><i class="fas fa-headset w-5"></i> Voice Roleplay</a></li>
                 <li><a href="#call-review" class="sidebar-link px-4 py-2.5"><i class="fas fa-file-audio w-5"></i> Call Review</a></li>
+                <li><a href="#call-recap" class="sidebar-link px-4 py-2.5"><i class="fas fa-clipboard-list w-5"></i> Call Recap</a></li>
                 <li><a href="#ai-chat" class="sidebar-link px-4 py-2.5"><i class="fas fa-robot w-5"></i> AI Coach</a></li>
             </ul>
 
@@ -298,6 +299,11 @@
               <div class="font-semibold text-sm text-[#002B5C] dark:text-white">Call Review</div>
               <div class="text-[11px] text-gray-500 mt-0.5">Upload &amp; coach</div>
             </button>
+            <button type="button" onclick="window.showSection('call-recap')" class="text-left rounded-2xl border border-gray-200 dark:border-gray-700 p-4 hover:border-[#00A89D] hover:shadow-md transition">
+              <i class="fas fa-clipboard-list text-[#00A89D] mb-2"></i>
+              <div class="font-semibold text-sm text-[#002B5C] dark:text-white">Call Recap</div>
+              <div class="text-[11px] text-gray-500 mt-0.5">Recording to notes</div>
+            </button>
             <button type="button" onclick="window.showSection('recruiting-playbook')" class="text-left rounded-2xl border border-gray-200 dark:border-gray-700 p-4 hover:border-[#00A89D] hover:shadow-md transition">
               <i class="fas fa-book-open text-[#00A89D] mb-2"></i>
               <div class="font-semibold text-sm text-[#002B5C] dark:text-white">Playbook</div>
@@ -396,11 +402,7 @@
       <div class="text-center mb-6">
         <span class="inline-block text-[10px] font-bold tracking-[2px] text-[#F15A29] bg-[#F15A29]/10 px-3 py-1 rounded-full mb-3">STT + COACHING</span>
         <h2 class="text-3xl font-bold mb-2 text-[#00A89D]">Call Review</h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Upload a real recruiting call (or paste a transcript). We transcribe with Grok STT, then coach like a senior mentor — with major emphasis on <strong>objection handling</strong> and <strong>moving toward a Clint / leadership call</strong>. Transcripts &amp; reviews stay in this browser only.</p>
-      </div>
-
-      <div class="rounded-2xl border border-[#00A89D]/30 bg-[#00A89D]/5 px-4 py-3 mb-4 text-sm text-[#002B5C] dark:text-teal-100">
-        <strong class="text-[#00A89D]">Coaching focus:</strong> Highest priority = overcoming objections. Very high priority = confidently advancing a short call with Clint / leadership. Clear next step (who / when) is next. Opener, discovery, listening, and Ruoff differentiators still score — but do not outrank those two skills.
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Upload a real recruiting call recording. We transcribe with Grok STT, then score the conversation and coach the next call. Transcripts &amp; reviews stay in this browser only.</p>
       </div>
 
       <div class="rounded-2xl border border-amber-300/60 bg-amber-50 dark:bg-amber-900/20 px-4 py-3 mb-6 text-sm text-amber-900 dark:text-amber-100">
@@ -438,42 +440,115 @@
           </div>
 
           <div class="flex flex-wrap gap-3">
-            <button type="button" id="call-review-transcribe" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#002B5C] text-white font-bold hover:bg-black transition disabled:opacity-60 disabled:cursor-not-allowed">
+            <button type="button" id="call-review-transcribe" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#002B5C] text-white font-bold hover:bg-black transition">
               <i class="fas fa-closed-captioning"></i> Transcribe
             </button>
-            <button type="button" id="call-review-analyze" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#00A89D] to-[#F15A29] text-white font-bold shadow-md hover:opacity-95 transition disabled:opacity-60 disabled:cursor-not-allowed">
+            <button type="button" id="call-review-analyze" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#00A89D] to-[#F15A29] text-white font-bold shadow-md hover:opacity-95 transition">
               <i class="fas fa-chart-line"></i> Analyze &amp; Coach
             </button>
             <button type="button" id="call-review-clear" class="inline-flex items-center gap-2 px-4 py-3 rounded-full border border-gray-200 text-gray-600 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
               Clear
             </button>
           </div>
-          <div id="call-review-status" class="hidden rounded-2xl border px-4 py-3.5 text-sm sm:text-base font-semibold m-0 flex items-start gap-3" role="status" aria-live="polite"></div>
-          <p class="text-xs text-gray-500 dark:text-gray-400 m-0">After you click Transcribe or Analyze, a full-screen progress modal stays open until the step finishes — don’t close the tab mid-run.</p>
+          <p id="call-review-status" class="text-sm text-gray-500 m-0"></p>
 
           <div>
             <label class="block text-sm font-semibold mb-2 text-[#002B5C] dark:text-white" for="call-review-transcript">Transcript</label>
             <textarea id="call-review-transcript" rows="12" class="w-full p-4 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-sm leading-relaxed" placeholder="Transcript appears here after Transcribe. You can edit before Analyze, or paste a transcript directly."></textarea>
           </div>
 
-          <div id="call-review-output" class="hidden ai-output max-w-none"></div>
+          <div id="call-review-output" class="hidden prose dark:prose-invert max-w-none rounded-3xl border border-[#00A89D]/30 bg-[#00A89D]/5 p-6 text-sm"></div>
         </div>
 
         <div class="space-y-4">
           <div class="rounded-3xl border border-gray-200 dark:border-gray-700 p-5">
             <h3 class="text-sm font-bold text-[#002B5C] dark:text-white mb-2">What you get</h3>
             <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 m-0 pl-4 list-disc">
-              <li>Overall score (weighted to objections + Clint ask)</li>
-              <li>Key coaching opportunities on soft exits &amp; missed asks</li>
-              <li>Scorecard (1–5) with heavier commentary on objections &amp; Clint</li>
-              <li>Rewrites for objection moments and Clint asks</li>
-              <li>3 practice drills focused on those two skills</li>
+              <li>Overall score + strengths</li>
+              <li>Gaps with scorecard (1–5)</li>
+              <li>Rewrites of weak moments</li>
+              <li>3 practice focuses for next call</li>
             </ul>
           </div>
           <div class="rounded-3xl border border-gray-200 dark:border-gray-700 p-5">
             <h3 class="text-sm font-bold text-[#002B5C] dark:text-white mb-3">Saved reviews</h3>
             <div id="call-review-history" class="space-y-2 max-h-[420px] overflow-y-auto"></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CALL RECAP ========== -->
+    <section id="call-recap" class="card bg-white dark:bg-gray-800 pt-6 pb-12 px-5 sm:px-8 rounded-3xl shadow-xl animate-fade-in hidden">
+      <div class="text-center mb-6">
+        <span class="inline-block text-[10px] font-bold tracking-[2px] text-[#F15A29] bg-[#F15A29]/10 px-3 py-1 rounded-full mb-3">AFTER THE CALL</span>
+        <h2 class="text-3xl font-bold mb-2 text-[#00A89D]">Call Recap</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Drop a call recording or paste a transcript. You get a manager-ready recap with the snapshot, temperature, open loops, and the next touch. Nothing is emailed.</p>
+      </div>
+      <div class="rounded-2xl border border-amber-300/60 bg-amber-50 dark:bg-amber-900/20 px-4 py-3 mb-6 text-sm text-amber-900 dark:text-amber-100">
+        <strong>Policy:</strong> Only upload recordings you are allowed to use. Call Review coaching stays on its own page — this recap does not replace scripts, openers, or scorecards.
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <div class="space-y-4">
+          <div id="call-recap-dropzone" class="cursor-pointer rounded-3xl border-2 border-dashed border-gray-300 dark:border-gray-600 p-8 text-center hover:border-[#00A89D] transition bg-gray-50 dark:bg-gray-900/40">
+            <i class="fas fa-cloud-upload-alt text-3xl text-[#00A89D] mb-2"></i>
+            <p class="font-semibold text-[#002B5C] dark:text-white m-0">Drop a call recording or paste a transcript</p>
+            <p class="text-xs text-gray-500 mt-1 m-0">mp3 · m4a · wav · webm · mp4 · max 25 MB</p>
+            <input type="file" id="call-recap-file" accept="audio/*,.m4a,.mp3,.wav,.webm,.mp4" class="hidden">
+            <p id="call-recap-file-meta" class="text-sm text-gray-600 dark:text-gray-400 mt-3 m-0">No file selected</p>
+            <p id="call-recap-stt-hint" class="hidden text-sm text-[#002B5C] dark:text-teal-100 mt-3 m-0"></p>
+          </div>
+          <p id="call-recap-source-name" class="hidden text-xs font-semibold text-gray-500 m-0"></p>
+          <div>
+            <label class="block text-sm font-semibold mb-2 text-[#002B5C] dark:text-white" for="call-recap-transcript">Paste transcript instead</label>
+            <textarea id="call-recap-transcript" rows="10" class="w-full p-4 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-sm leading-relaxed" placeholder="Paste the call here if you already have the words. You can edit a transcript before building the recap."></textarea>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-semibold mb-1 text-[#002B5C] dark:text-white" for="call-recap-candidate">Candidate name</label>
+              <input type="text" id="call-recap-candidate" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900" placeholder="Optional">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-1 text-[#002B5C] dark:text-white" for="call-recap-role">Role you’re recruiting for</label>
+              <input type="text" id="call-recap-role" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900" placeholder="Optional">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-1 text-[#002B5C] dark:text-white" for="call-recap-recruiter">Recruiter name</label>
+            <input type="text" id="call-recap-recruiter" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900" placeholder="Optional — fills from your profile">
+          </div>
+          <div>
+            <div class="text-sm font-semibold mb-2 text-[#002B5C] dark:text-white">Call type</div>
+            <div id="call-recap-types" class="flex flex-wrap gap-2" role="group" aria-label="Call type">
+              <button type="button" data-call-type="Intro" class="call-recap-type px-3 py-1.5 rounded-full border border-gray-300 text-sm font-semibold text-[#002B5C] dark:text-white" aria-pressed="false">Intro</button>
+              <button type="button" data-call-type="Discovery" class="call-recap-type px-3 py-1.5 rounded-full border border-gray-300 text-sm font-semibold text-[#002B5C] dark:text-white" aria-pressed="false">Discovery</button>
+              <button type="button" data-call-type="Follow-up" class="call-recap-type px-3 py-1.5 rounded-full border border-gray-300 text-sm font-semibold text-[#002B5C] dark:text-white" aria-pressed="false">Follow-up</button>
+              <button type="button" data-call-type="Offer" class="call-recap-type px-3 py-1.5 rounded-full border border-gray-300 text-sm font-semibold text-[#002B5C] dark:text-white" aria-pressed="false">Offer</button>
+              <button type="button" data-call-type="Other" class="call-recap-type px-3 py-1.5 rounded-full border border-gray-300 text-sm font-semibold text-[#002B5C] dark:text-white" aria-pressed="false">Other</button>
+            </div>
+          </div>
+          <button type="button" id="call-recap-generate" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#00A89D] to-[#F15A29] text-white font-bold shadow-md hover:opacity-95 transition">
+            <i class="fas fa-clipboard-check"></i> Build recap
+          </button>
+          <div id="call-recap-status" class="hidden" role="status" aria-live="polite"></div>
+        </div>
+        <div>
+          <div id="call-recap-empty" class="rounded-3xl border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/40 p-10 text-center">
+            <i class="fas fa-align-left text-3xl text-[#00A89D] mb-3"></i>
+            <p class="font-semibold text-[#002B5C] dark:text-white m-0">Drop a call recording or paste a transcript</p>
+            <p class="text-sm text-gray-500 mt-2 m-0">The recap stays on this side after you build it. Regenerate uses the same transcript.</p>
+          </div>
+          <div id="call-recap-result" class="hidden"></div>
+        </div>
+      </div>
+      <div id="call-recap-overlay" class="hidden fixed inset-0 z-[80] bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-spinner fa-spin text-[#00A89D] text-xl" aria-hidden="true"></i>
+            <h3 class="text-lg font-bold text-[#002B5C] dark:text-white m-0">Working</h3>
+          </div>
+          <p id="call-recap-overlay-text" class="text-sm text-gray-600 dark:text-gray-300 m-0">Working…</p>
+          <button type="button" id="call-recap-cancel" class="mt-5 px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold text-[#002B5C] dark:text-white hover:border-[#F15A29]">Cancel</button>
         </div>
       </div>
     </section>
@@ -2511,7 +2586,7 @@
 <script src="js/features/weekly-win-plan.js"></script>
 <script src="js/features/tool-bridges.js"></script>
 <script src="js/features/prospecting-time-blocks.js"></script>
-<script src="js/features/blog-creator.js?v=20260717-editorial-output"></script>
+<script src="js/features/blog-creator.js"></script>
 <script src="js/features/legacy-helpers.js"></script>
 <script src="js/features/ai-chat.js"></script>
 <script src="js/features/global-search-deep-index.js?v=20260717-recruit-search"></script>
@@ -2521,7 +2596,8 @@
 <script src="js/features/recruit-profile-wizard.js?v=20260717-recruit-wizard4"></script>
 <script src="js/features/home-launchpad.js?v=20260717-recruit-home"></script>
 <script src="js/features/voice-roleplay.js?v=20260717-recruit-voice"></script>
-<script src="js/features/call-review.js?v=20260717-progress-detail"></script>
+<script src="js/features/call-review.js?v=20260717-recruit-voice"></script>
+<script src="js/features/call-recap.js?v=20260929-v241"></script>
 <script src="js/features/recruiting-content-overrides.js"></script>
 
 <script>
@@ -3252,7 +3328,7 @@
 <div id="app-version-line" data-app-name="Ultimate Recruiter Sales Coach" class="text-center text-[9px] text-gray-400 dark:text-gray-500 py-2 mt-6 border-t border-gray-200 dark:border-gray-700">
   Ultimate Recruiter Sales Coach • v… • … • Render
 </div>
-<script src="js/app-version.js?v=20260717-recruit-home"></script>
+<script src="js/app-version.js?v=20260929-v241"></script>
 
 </body>
 </html>

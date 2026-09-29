@@ -450,87 +450,89 @@ Return the FULL updated output in this order: blog markdown first, then **Sugges
 
         lastBlogBundle = { blogMarkdown, captionText, googlePostText, reelScriptText, topicInput };
 
-        // === Render output — clean editorial cards (navy/teal hierarchy, no carnival orange headers) ===
+        // === Render output - Premium Card Style matching Social section ===
         output.innerHTML = `
-    <div class="ai-output mb-6">
-        <div class="ai-output-header">
+    <!-- Main Blog Content Card - premium match to 2026 Plan / Social Post tools -->
+    <div class="bg-white dark:bg-gray-900 border-2 border-[#F15A29]/30 rounded-3xl shadow-2xl p-8 md:p-10 mb-8">
+        <!-- Hero header badge like 2026 plan -->
+        <div class="flex items-center justify-between mb-6">
             <div>
-                <div class="ai-output-kicker"><i class="fas fa-check-circle" aria-hidden="true"></i> Ready</div>
-                <h3 class="ai-output-title">Blog post</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 m-0 mt-1">SEO-minded draft in your voice, with matching social assets below.</p>
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#F15A29] text-white text-xs font-bold tracking-[2px] mb-3">
+                    <i class="fas fa-check-circle"></i> YOUR AUTHORITY BLOG POST IS READY
+                </div>
+                <h3 class="text-3xl md:text-4xl font-bold text-[#F15A29]">Your Custom Blog Post</h3>
+                <p class="text-gray-600 dark:text-gray-400 mt-1 text-sm">SEO + GEO optimized, in your exact voice, with matching social assets.</p>
             </div>
-            <span class="text-[11px] px-2.5 py-1 rounded-full bg-[#00A89D]/10 text-[#00A89D] font-semibold shrink-0 hidden sm:inline">Publish-ready</span>
+            <span class="text-xs px-3 py-1 bg-[#00A89D]/10 text-[#00A89D] rounded-full font-medium hidden md:block">Ready to publish</span>
         </div>
-        <div class="ai-output-body prose dark:prose-invert max-w-none text-[15px] leading-relaxed">
+        <div class="prose prose-lg dark:prose-invert max-w-none">
             ${marked.parse(blogMarkdown)}
         </div>
     </div>
 
-    <div class="flex flex-wrap gap-2 sm:gap-3 mb-8">
-        <button id="copy-blog-btn" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#002B5C] text-white text-sm font-semibold hover:bg-black transition">
-            <i class="fas fa-copy"></i> Copy blog
+    <!-- Blog Actions -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+        <button id="copy-blog-btn" class="bg-[#F15A29] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:bg-[#F15A29]/90 transition-all flex items-center justify-center gap-2 flex-1">
+            <i class="fas fa-copy"></i> Copy Blog
         </button>
-        <button id="download-blog-btn" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm font-semibold text-[#002B5C] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+        <button id="download-blog-btn" class="bg-[#002B5C] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:bg-[#001429] transition-all flex items-center justify-center gap-2 flex-1">
             <i class="fas fa-download"></i> Download .doc
         </button>
-        <button id="jump-publish-btn" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#00A89D] text-white text-sm font-semibold hover:bg-[#008F85] transition">
-            <i class="fas fa-external-link-alt"></i> Publish
+        <button id="jump-publish-btn" class="bg-[#00A89D] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:bg-[#008F85] transition-all flex items-center justify-center gap-2 flex-1">
+            <i class="fas fa-external-link-alt"></i> Publish on Site
         </button>
-        <button onclick="if(typeof window.saveBlogToVault==='function') window.saveBlogToVault(); else alert('Save ready after refresh');" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm font-semibold text-[#002B5C] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-            <i class="fas fa-bookmark"></i> Save to vault
+        <button onclick="if(typeof window.saveBlogToVault==='function') window.saveBlogToVault(); else alert('Save ready after refresh');" class="bg-[#002B5C] text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:bg-[#001429] transition-all flex items-center justify-center gap-2 flex-1">
+            <i class="fas fa-bookmark"></i> Save Bundle to Vault
         </button>
-        <button onclick="if(window.clearSavedBlog){window.clearSavedBlog();}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
+        <button onclick="if(window.clearSavedBlog){window.clearSavedBlog();}" class="bg-red-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:bg-red-600 transition-all flex items-center justify-center gap-2 flex-1">
             <i class="fas fa-trash"></i> Clear
         </button>
     </div>
 
-    <div class="ai-output mb-5">
-        <div class="ai-output-header">
-            <div>
-                <div class="ai-output-kicker">Social</div>
-                <h3 class="ai-output-title">Caption</h3>
-            </div>
-            <button id="copy-caption-btn" class="text-sm px-3 py-1.5 rounded-lg bg-[#00A89D] text-white font-semibold hover:bg-[#008F85] inline-flex items-center gap-1.5">
-                <i class="fas fa-copy"></i> Copy
+    <!-- Social Caption Card - consistent premium card style (matching 2026 Plan supporting cards) -->
+    <div class="bg-white dark:bg-gray-900 border-2 border-[#F15A29]/20 rounded-3xl p-8 mb-8 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-[#F15A29]">Social Media Caption</h3>
+            <button id="copy-caption-btn" class="text-sm px-4 py-2 bg-[#00A89D] text-white rounded-xl hover:bg-[#008F85] flex items-center gap-2">
+                <i class="fas fa-share-alt"></i> Copy
             </button>
         </div>
-        <div id="social-caption" class="rounded-xl bg-gray-50 dark:bg-gray-800/80 p-4 text-sm sm:text-[15px] whitespace-pre-wrap leading-relaxed border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200">
+        <div id="social-caption" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl text-base whitespace-pre-wrap font-medium border border-gray-200 dark:border-gray-700">
             ${captionText || 'No caption generated — try regenerating!'}
         </div>
     </div>
 
-    <div class="ai-output mb-5">
-        <div class="ai-output-header">
-            <div>
-                <div class="ai-output-kicker">Google Business</div>
-                <h3 class="ai-output-title">Profile post</h3>
-            </div>
-            <button id="copy-google-btn" class="text-sm px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 font-semibold text-[#002B5C] dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 inline-flex items-center gap-1.5">
+    <!-- Google Post Card -->
+    <div class="bg-white dark:bg-gray-900 border-2 border-[#F15A29]/20 rounded-3xl p-8 mb-8 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-[#F15A29]">Google Business Profile Post</h3>
+            <button id="copy-google-btn" class="text-sm px-4 py-2 bg-[#F15A29] text-white rounded-xl hover:bg-[#F15A29]/90 flex items-center gap-2">
                 <i class="fas fa-copy"></i> Copy
             </button>
         </div>
-        <div id="google-post" class="prose dark:prose-invert max-w-none text-sm sm:text-[15px] rounded-xl bg-gray-50 dark:bg-gray-800/80 p-4 border border-gray-100 dark:border-gray-700">
+        <div id="google-post" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl text-base prose border border-gray-200 dark:border-gray-700">
             ${googlePostText ? marked.parse(googlePostText) : 'No Google post generated — try a different topic or regenerate.'}
         </div>
     </div>
 
-    <div class="ai-output mb-2">
-        <div class="ai-output-header">
-            <div>
-                <div class="ai-output-kicker">Video</div>
-                <h3 class="ai-output-title">30–45s reel script</h3>
-            </div>
-            <button id="copy-reel-btn" class="text-sm px-3 py-1.5 rounded-lg bg-[#00A89D] text-white font-semibold hover:bg-[#008F85] inline-flex items-center gap-1.5">
-                <i class="fas fa-video"></i> Copy
+    <!-- Reel Script Card + cross link to related tools for better UX -->
+    <div class="bg-white dark:bg-gray-900 border-2 border-[#F15A29]/20 rounded-3xl p-8 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-[#F15A29]">30–45 Second Reel / Video Script</h3>
+            <button id="copy-reel-btn" class="text-sm px-4 py-2 bg-[#00A89D] text-white rounded-xl hover:bg-[#008F85] flex items-center gap-2">
+                <i class="fas fa-video"></i> Copy Script
             </button>
         </div>
-        <div id="reel-script" class="prose dark:prose-invert max-w-none text-sm sm:text-[15px] rounded-xl bg-gray-50 dark:bg-gray-800/80 p-4 border border-gray-100 dark:border-gray-700">
+        <div id="reel-script" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl text-base prose border border-gray-200 dark:border-gray-700">
             ${reelScriptText ? marked.parse(reelScriptText) : 'No Reel script generated — try regenerating!'}
         </div>
-        <p class="text-xs text-gray-500 m-0 mt-3">Hook, script, visuals, and CTA included.</p>
-        <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
-            <span>Next:</span>
-            <a href="#social-post" onclick="if(typeof window.showSection==='function'){window.showSection('social-post');}return false;" class="text-[#00A89D] hover:underline">Social Post &amp; Calendar</a>
+        <p class="text-xs text-gray-500 mt-3">Ready to film — hook, script, visuals, and CTA included.</p>
+
+        <!-- Mini cross-link bar to keep user in the ecosystem (consistent with plan execution hubs) -->
+        <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
+            <span>Next steps:</span>
+            <a href="#social-post" onclick="if(typeof window.showSection==='function'){window.showSection('social-post');}return false;" class="text-[#00A89D] hover:underline">Turn more ideas into posts in Social Post &amp; Calendar</a>
+            <a href="#social-post" onclick="if(typeof window.showSection==='function'){window.showSection('social-post');}return false;" class="text-[#00A89D] hover:underline">Open Social Post &amp; 30-Day Calendar</a>
         </div>
     </div>
 

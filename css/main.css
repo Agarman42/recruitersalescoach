@@ -567,234 +567,37 @@ input[type="range"]:active::-moz-range-thumb {
     display:block;
 }
 
-/*
- * AI / markdown tool output — clean editorial style.
- * (Previously: huge orange headers + thick teal underlines — looked carnival, not coach.)
- */
-.prose {
-    color: #1f2937;
-    line-height: 1.65;
-}
-
+/* Enhanced Blog Headings */
 .prose h1,
 .prose h2,
 .prose h3,
 .prose h4 {
-    color: #002B5C !important;
-    border-bottom: none;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
+    color: #F15A29 !important;
+    border-bottom: 4px solid #00A89D;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem !important;
 }
 
 .prose h1 {
-    font-size: 1.5rem !important;       /* 24px */
-    font-weight: 700 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.85rem !important;
-    padding-bottom: 0.55rem;
-    border-bottom: 1px solid rgba(0, 43, 92, 0.12);
+    font-size: 3.5rem !important;
+    font-weight: 900 !important;
 }
 
 .prose h2 {
-    font-size: 1.125rem !important;     /* 18px */
-    font-weight: 700 !important;
-    margin-top: 1.65rem !important;
-    margin-bottom: 0.55rem !important;
-    padding: 0.15rem 0 0.15rem 0.7rem;
-    border-left: 3px solid #00A89D;
-    border-bottom: none;
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
 }
 
 .prose h3 {
-    font-size: 1rem !important;         /* 16px */
-    font-weight: 650 !important;
-    margin-top: 1.25rem !important;
-    margin-bottom: 0.4rem !important;
-    color: #334155 !important;
+    font-size: 2rem !important;
 }
 
-.prose h4 {
-    font-size: 0.9375rem !important;    /* 15px */
-    font-weight: 600 !important;
-    margin-top: 1rem !important;
-    margin-bottom: 0.35rem !important;
-    color: #475569 !important;
-}
-
-.prose p {
-    margin-top: 0.4rem !important;
-    margin-bottom: 0.7rem !important;
-    font-size: 0.95rem;
-    color: #374151;
-}
-
-.prose ul,
-.prose ol {
-    margin-top: 0.35rem !important;
-    margin-bottom: 0.85rem !important;
-    padding-left: 1.25rem;
-}
-
-.prose li {
-    margin-bottom: 0.35rem;
-    font-size: 0.95rem;
-    color: #374151;
-}
-
-.prose li > p {
-    margin-bottom: 0.25rem !important;
-}
-
-.prose strong {
-    color: #002B5C;
-    font-weight: 650;
-}
-
-.prose blockquote {
-    margin: 0.85rem 0;
-    padding: 0.65rem 0.9rem;
-    border-left: 3px solid #00A89D;
-    background: rgba(0, 168, 157, 0.06);
-    border-radius: 0 0.75rem 0.75rem 0;
-    color: #334155;
-    font-style: normal;
-}
-
-.prose hr {
-    border: none;
-    border-top: 1px solid rgba(0, 43, 92, 0.1);
-    margin: 1.25rem 0;
-}
-
-.prose table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-    margin: 0.75rem 0 1rem;
-}
-
-.prose th,
-.prose td {
-    border: 1px solid rgba(0, 43, 92, 0.1);
-    padding: 0.5rem 0.65rem;
-    text-align: left;
-    vertical-align: top;
-}
-
-.prose th {
-    background: rgba(0, 43, 92, 0.04);
-    color: #002B5C;
-    font-weight: 650;
-}
-
-.prose code {
-    font-size: 0.85em;
-    background: rgba(0, 43, 92, 0.06);
-    padding: 0.1em 0.35em;
-    border-radius: 0.25rem;
-}
-
-/* Tool output shell — soft card, not a loud brand billboard */
-.ai-output {
-    background: #fff;
-    border: 1px solid rgba(0, 43, 92, 0.1);
-    border-radius: 1.25rem;
-    padding: 1.35rem 1.5rem;
-    box-shadow: 0 1px 2px rgba(0, 43, 92, 0.04);
-}
-
-.ai-output-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.85rem;
-    border-bottom: 1px solid rgba(0, 43, 92, 0.08);
-}
-
-.ai-output-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #00A89D;
-    margin-bottom: 0.25rem;
-}
-
-.ai-output-title {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: #002B5C;
-    margin: 0;
-    line-height: 1.3;
-}
-
-.ai-output-body.prose h1:first-child {
-    margin-top: 0 !important;
-}
-
-/* Dark mode */
-.dark .prose {
-    color: #e5e7eb;
-}
-
+/* Dark mode headings */
 .dark .prose h1,
-.dark .prose h2 {
-    color: #f3f4f6 !important;
-}
-
-.dark .prose h1 {
-    border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-
-.dark .prose h2 {
-    border-left-color: #00A89D;
-}
-
+.dark .prose h2,
 .dark .prose h3,
 .dark .prose h4 {
-    color: #d1d5db !important;
-}
-
-.dark .prose p,
-.dark .prose li {
-    color: #d1d5db;
-}
-
-.dark .prose strong {
-    color: #f9fafb;
-}
-
-.dark .prose blockquote {
-    background: rgba(0, 168, 157, 0.1);
-    color: #e5e7eb;
-}
-
-.dark .prose th {
-    background: rgba(255, 255, 255, 0.05);
-    color: #f3f4f6;
-}
-
-.dark .prose th,
-.dark .prose td {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .ai-output {
-    background: #111827;
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .ai-output-header {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .ai-output-title {
-    color: #f3f4f6;
+    color: #F15A29 !important;
 }
 
 /* Prevent sidebar underlines */
